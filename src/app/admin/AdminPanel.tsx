@@ -68,6 +68,9 @@ export default function AdminPanel({ participantCount, stages: initialStages, ri
   const [resultRows, setResultRows] = useState<string[]>(Array(10).fill(''));
   const [selectedStageId, setSelectedStageId] = useState('');
   const [dnfRiderName, setDnfRiderName] = useState('');
+  const [importLoading, setImportLoading] = useState(false);
+  const [importMessage, setImportMessage] = useState('');
+  const [importSource, setImportSource] = useState('');
 
   // GC top 5
   const [gcTop5, setGcTop5] = useState<string[]>(['', '', '', '', '']);
@@ -125,6 +128,34 @@ export default function AdminPanel({ participantCount, stages: initialStages, ri
       }
     } catch { /* ignore */ } finally {
       setParticipantsLoading(false);
+    }
+  };
+
+  const importFromPCS = async () => {
+    const stage = stagesState.find(s => s.id === selectedStageId);
+    if (!stage) { setImportMessage('Kies eerst een etappe.'); return; }
+    setImportLoading(true);
+    setImportMessage('');
+    setImportSource('');
+    try {
+      const res = await fetch('/api/admin/import-results', {
+        method: 'POST',
+        headers: authHeaders,
+        body: JSON.stringify({ stageNumber: stage.stageNumber }),
+      });
+      const data = await res.json();
+      if (res.ok && data.riders?.length) {
+        const filled = [...data.riders, ...Array(10).fill('')].slice(0, 10);
+        setResultRows(filled);
+        setImportMessage(`✓ ${data.riders.length} renners opgehaald van ProCyclingStats — controleer en sla op.`);
+        setImportSource(data.source ?? '');
+      } else {
+        setImportMessage(`✗ ${data.error ?? 'Niets gevonden'}`);
+      }
+    } catch {
+      setImportMessage('✗ Netwerkfout bij ophalen');
+    } finally {
+      setImportLoading(false);
     }
   };
 
@@ -444,10 +475,57 @@ export default function AdminPanel({ participantCount, stages: initialStages, ri
             {activeSection === 'results' && (
               <div>
                 <h2 className="font-display text-3xl mb-4" style={{ color: 'var(--tour-text)' }}>Uitslag Invoeren</h2>
+
+                {/* Auto-import card */}
+                <div className="card-dark p-5 mb-4" style={{ borderLeft: '3px solid var(--tour-yellow)' }}>
+                  <div className="flex items-start justify-between gap-4 mb-3">
+                    <div>
+                      <div className="font-condensed font-bold text-sm mb-1" style={{ color: 'var(--tour-text)' }}>
+                        📡 Automatisch importeren van ProCyclingStats
+                      </div>
+                      <p className="text-xs" style={{ color: 'var(--tour-text-muted)' }}>
+                        Kies een etappe, klik op ophalen — de top 10 wordt automatisch ingevuld. Controleer daarna en sla op.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex gap-3">
+                    <select
+                      className="form-input flex-1"
+                      value={selectedStageId}
+                      onChange={e => { setSelectedStageId(e.target.value); setImportMessage(''); setImportSource(''); }}
+                    >
+                      <option value="">Kies een etappe...</option>
+                      {stagesState.map(s => (
+                        <option key={s.id} value={s.id}>
+                          Etappe {s.stageNumber} — {s.startLocation} → {s.finishLocation}
+                        </option>
+                      ))}
+                    </select>
+                    <button
+                      onClick={importFromPCS}
+                      disabled={!selectedStageId || importLoading}
+                      className="flex-shrink-0 px-4 py-2 rounded-lg font-condensed font-bold text-sm text-black disabled:opacity-40 transition-all"
+                      style={{ background: 'var(--tour-yellow)', whiteSpace: 'nowrap' }}
+                    >
+                      {importLoading ? '⌛ Ophalen...' : '🌐 Haal op'}
+                    </button>
+                  </div>
+                  {importMessage && (
+                    <div className="mt-3 text-xs font-condensed font-bold" style={{ color: importMessage.startsWith('✓') ? '#00873F' : 'var(--tour-red)' }}>
+                      {importMessage}
+                      {importSource && (
+                        <span className="ml-2 font-normal" style={{ color: 'var(--tour-text-muted)' }}>
+                          — <a href={importSource} target="_blank" rel="noopener noreferrer" className="underline">bron</a>
+                        </span>
+                      )}
+                    </div>
+                  )}
+                </div>
+
                 <div className="card-dark p-6">
                   <div className="mb-4">
                     <label className="block text-xs font-condensed font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--tour-text-muted)' }}>
-                      Etappe
+                      Etappe (of kies hierboven via auto-import)
                     </label>
                     <select
                       className="form-input"
