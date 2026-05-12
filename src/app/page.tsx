@@ -128,14 +128,14 @@ export default async function HomePage() {
 
       {/* LIVE BANNER */}
       {activeStage && (
-        <section className="py-4" style={{ background: 'rgba(255,215,0,0.1)', borderTop: '1px solid rgba(255,215,0,0.3)', borderBottom: '1px solid rgba(255,215,0,0.3)' }}>
+        <section className="py-4" style={{ background: 'rgba(232,184,0,0.08)', borderTop: '1px solid rgba(232,184,0,0.25)', borderBottom: '1px solid rgba(232,184,0,0.25)' }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-              <span className="font-condensed font-bold text-yellow-400">LIVE — Etappe {activeStage.stageNumber}</span>
-              <span className="text-white font-condensed">{activeStage.startLocation} → {activeStage.finishLocation}</span>
+              <span className="font-condensed font-bold" style={{ color: 'var(--tour-yellow-dark)' }}>LIVE — Etappe {activeStage.stageNumber}</span>
+              <span className="font-condensed" style={{ color: 'var(--tour-text)' }}>{activeStage.startLocation} → {activeStage.finishLocation}</span>
             </div>
-            <Link href={`/etappes/${activeStage.stageNumber}`} className="text-xs text-yellow-400 hover:underline">
+            <Link href={`/etappes/${activeStage.stageNumber}`} className="text-xs hover:underline" style={{ color: 'var(--tour-yellow-dark)' }}>
               Volg live →
             </Link>
           </div>
@@ -146,16 +146,16 @@ export default async function HomePage() {
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <div className="font-condensed text-sm font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--tour-yellow)' }}>
+            <div className="font-condensed text-sm font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--tour-yellow-dark)' }}>
               Het Spel
             </div>
-            <h2 className="font-display text-4xl sm:text-5xl text-white">Hoe werkt het?</h2>
+            <h2 className="font-display text-4xl sm:text-5xl" style={{ color: 'var(--tour-text)' }}>Hoe werkt het?</h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {howItWorks.map((item, i) => (
               <div key={i} className="card-dark p-6 text-center">
                 <div className="text-4xl mb-4">{item.icon}</div>
-                <div className="font-condensed font-bold text-lg mb-2 text-white">{item.title}</div>
+                <div className="font-condensed font-bold text-lg mb-2" style={{ color: 'var(--tour-text)' }}>{item.title}</div>
                 <p className="text-sm leading-relaxed" style={{ color: 'var(--tour-text-muted)' }}>{item.desc}</p>
               </div>
             ))}
@@ -164,13 +164,13 @@ export default async function HomePage() {
       </section>
 
       {/* SIX JERSEYS */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: 'rgba(26, 25, 51, 0.5)' }}>
+      <section className="py-20 px-4 sm:px-6 lg:px-8 section-alt">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <div className="font-condensed text-sm font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--tour-yellow)' }}>
+            <div className="font-condensed text-sm font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--tour-yellow-dark)' }}>
               Klassementen
             </div>
-            <h2 className="font-display text-4xl sm:text-5xl text-white">De Zes Truien</h2>
+            <h2 className="font-display text-4xl sm:text-5xl" style={{ color: 'var(--tour-text)' }}>De Zes Truien</h2>
             <p className="mt-3 text-sm" style={{ color: 'var(--tour-text-muted)' }}>
               Strijd voor elk van de zes klassementen — elk met zijn eigen trui
             </p>
@@ -181,8 +181,8 @@ export default async function HomePage() {
                 <div className="transition-transform duration-300 group-hover:scale-110 mb-3">
                   <JerseyIcon type={jersey.type} size={56} />
                 </div>
-                <div className="font-condensed font-bold text-sm text-white leading-tight">{jersey.label}</div>
-                <div className="text-xs mt-1" style={{ color: jersey.color, opacity: 0.8 }}>{jersey.sub}</div>
+                <div className="font-condensed font-bold text-sm leading-tight" style={{ color: 'var(--tour-text)' }}>{jersey.label}</div>
+                <div className="text-xs mt-1" style={{ color: jersey.type === 'white' ? '#9C9890' : jersey.color }}>{jersey.sub}</div>
               </Link>
             ))}
           </div>
@@ -195,12 +195,12 @@ export default async function HomePage() {
           <div className="max-w-7xl mx-auto">
             <div className="flex items-end justify-between mb-10">
               <div>
-                <div className="font-condensed text-sm font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--tour-yellow)' }}>
+                <div className="font-condensed text-sm font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--tour-yellow-dark)' }}>
                   Aankomend
                 </div>
-                <h2 className="font-display text-4xl sm:text-5xl text-white">Volgende Etappes</h2>
+                <h2 className="font-display text-4xl sm:text-5xl" style={{ color: 'var(--tour-text)' }}>Volgende Etappes</h2>
               </div>
-              <Link href="/etappes" className="hidden sm:block text-sm hover:underline" style={{ color: 'var(--tour-yellow)' }}>
+              <Link href="/etappes" className="hidden sm:block text-sm hover:underline" style={{ color: 'var(--tour-yellow-dark)' }}>
                 Alle etappes →
               </Link>
             </div>
@@ -220,7 +220,7 @@ export default async function HomePage() {
                         {stage.stageNumber}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="font-condensed font-bold text-base text-white truncate">
+                        <div className="font-condensed font-bold text-base truncate" style={{ color: 'var(--tour-text)' }}>
                           {stage.startLocation} → {stage.finishLocation}
                         </div>
                         <div className="text-sm" style={{ color: 'var(--tour-text-muted)' }}>
@@ -240,16 +240,16 @@ export default async function HomePage() {
       )}
 
       {/* CTA BANNER */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: 'linear-gradient(135deg, rgba(255,215,0,0.06) 0%, rgba(0,85,164,0.06) 100%)' }}>
+      <section className="py-20 px-4 sm:px-6 lg:px-8 section-alt">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="font-display text-4xl sm:text-6xl text-white mb-4">Klaar om mee te doen?</h2>
+          <h2 className="font-display text-4xl sm:text-6xl mb-4" style={{ color: 'var(--tour-text)' }}>Klaar om mee te doen?</h2>
           <p className="text-lg mb-8" style={{ color: 'var(--tour-text-muted)' }}>
             Schrijf je in vóór de start van de Tour en maak kans op de pot! Inschrijven kost maar €10.
           </p>
           <Link
             href="/meedoen"
             className="inline-block px-10 py-5 rounded-xl font-condensed font-bold text-xl text-black transition-all duration-200 hover:scale-105"
-            style={{ background: 'var(--tour-yellow)', boxShadow: '0 0 60px rgba(255,215,0,0.25)' }}
+            style={{ background: 'var(--tour-yellow)', boxShadow: '0 4px 24px rgba(232,184,0,0.3)' }}
           >
             🚴 Schrijf je in!
           </Link>

@@ -22,11 +22,11 @@ interface StageCardProps {
 }
 
 const typeGradients: Record<string, string> = {
-  flat: 'linear-gradient(135deg, #0a2a0a 0%, #003d1a 100%)',
-  hilly: 'linear-gradient(135deg, #2a1800 0%, #4a2e00 100%)',
-  mountain: 'linear-gradient(135deg, #2a0005 0%, #4a0008 100%)',
-  time_trial: 'linear-gradient(135deg, #00102a 0%, #001d4a 100%)',
-  team_time_trial: 'linear-gradient(135deg, #00102a 0%, #001540 100%)',
+  flat: 'linear-gradient(135deg, #e8f5ee 0%, #c8eedd 100%)',
+  hilly: 'linear-gradient(135deg, #fff3e0 0%, #ffe0b0 100%)',
+  mountain: 'linear-gradient(135deg, #fde8ea 0%, #fac8cc 100%)',
+  time_trial: 'linear-gradient(135deg, #e6eef8 0%, #c8daf0 100%)',
+  team_time_trial: 'linear-gradient(135deg, #e0ebf5 0%, #c0d5eb 100%)',
 };
 
 const typeIcons: Record<string, string> = {
@@ -54,7 +54,7 @@ export default function StageCard({ stage, compact = false, selected = false, on
       >
         <div
           className="w-10 h-10 rounded-lg flex items-center justify-center font-display text-sm font-bold flex-shrink-0"
-          style={{ background: typeGradients[stage.type], border: `1px solid ${typeColor}30` }}
+          style={{ background: typeGradients[stage.type], border: `1px solid ${typeColor}40`, color: typeColor }}
         >
           {stage.stageNumber}
         </div>
@@ -110,7 +110,7 @@ export default function StageCard({ stage, compact = false, selected = false, on
         {/* Stage number & type */}
         <div className="flex items-start justify-between mb-3">
           <div>
-            <div className="font-display text-5xl leading-none" style={{ color: typeColor, opacity: 0.4 }}>
+            <div className="font-display text-5xl leading-none" style={{ color: typeColor, opacity: 0.6 }}>
               {stage.stageNumber}
             </div>
             <div className="font-condensed text-xs font-bold uppercase tracking-widest -mt-1" style={{ color: typeColor }}>
@@ -124,11 +124,11 @@ export default function StageCard({ stage, compact = false, selected = false, on
 
         {/* Route */}
         <div className="mb-3">
-          <div className="font-condensed font-bold text-base leading-tight text-white">
+          <div className="font-condensed font-bold text-base leading-tight" style={{ color: 'var(--tour-text)' }}>
             {stage.startLocation}
           </div>
           <div className="text-xs" style={{ color: 'var(--tour-text-muted)' }}>↓</div>
-          <div className="font-condensed font-bold text-base leading-tight text-white">
+          <div className="font-condensed font-bold text-base leading-tight" style={{ color: 'var(--tour-text)' }}>
             {stage.finishLocation}
           </div>
         </div>
@@ -139,23 +139,23 @@ export default function StageCard({ stage, compact = false, selected = false, on
         </div>
 
         {/* Stats */}
-        <div className="flex gap-4 pt-3" style={{ borderTop: `1px solid ${typeColor}25` }}>
+        <div className="flex gap-4 pt-3" style={{ borderTop: `1px solid ${typeColor}40` }}>
           <div>
-            <div className="font-display text-lg leading-none text-white">{stage.distanceKm}</div>
+            <div className="font-display text-lg leading-none" style={{ color: 'var(--tour-text)' }}>{stage.distanceKm}</div>
             <div className="text-xs" style={{ color: 'var(--tour-text-muted)' }}>km</div>
           </div>
           {stage.elevationMeters > 0 && (
             <div>
-              <div className="font-display text-lg leading-none text-white">{stage.elevationMeters.toLocaleString('nl-NL')}</div>
+              <div className="font-display text-lg leading-none" style={{ color: 'var(--tour-text)' }}>{stage.elevationMeters.toLocaleString('nl-NL')}</div>
               <div className="text-xs" style={{ color: 'var(--tour-text-muted)' }}>hm</div>
             </div>
           )}
           <div className="ml-auto flex gap-1">
             {stage.isSprintStage && (
-              <span className="text-xs bg-green-900 text-green-300 px-1.5 py-0.5 rounded">⚡ Sprint</span>
+              <span className="text-xs px-1.5 py-0.5 rounded" style={{ background: '#e6f5ec', color: '#00873F' }}>⚡ Sprint</span>
             )}
             {stage.isMountainStage && (
-              <span className="text-xs bg-red-900 text-red-300 px-1.5 py-0.5 rounded">⛰️ Berg</span>
+              <span className="text-xs px-1.5 py-0.5 rounded" style={{ background: '#fde8ea', color: '#CC0015' }}>⛰️ Berg</span>
             )}
           </div>
         </div>

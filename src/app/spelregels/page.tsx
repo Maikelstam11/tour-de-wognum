@@ -62,12 +62,12 @@ export default function SpelregelsPage() {
   return (
     <div className="pt-20">
       {/* Header */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8" style={{ background: 'linear-gradient(180deg, rgba(26,25,51,0.8) 0%, transparent 100%)' }}>
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
-          <div className="font-condensed text-sm font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--tour-yellow)' }}>
+          <div className="font-condensed text-sm font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--tour-yellow-dark)' }}>
             Tour de Wognum 2026
           </div>
-          <h1 className="font-display text-5xl sm:text-7xl text-white mb-4">Spelregels</h1>
+          <h1 className="font-display text-5xl sm:text-7xl mb-4" style={{ color: 'var(--tour-text)' }}>Spelregels</h1>
           <p className="text-base sm:text-lg" style={{ color: 'var(--tour-text-muted)' }}>
             Alles wat je moet weten om mee te doen — en om te winnen.
           </p>
@@ -77,7 +77,7 @@ export default function SpelregelsPage() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 space-y-16">
         {/* Basic setup */}
         <section>
-          <h2 className="font-display text-4xl text-white mb-6">Het Spel</h2>
+          <h2 className="font-display text-4xl mb-6" style={{ color: 'var(--tour-text)' }}>Het Spel</h2>
           <div className="card-dark p-6 space-y-4">
             {[
               { icon: '🚴', text: 'Kies eenmalig 20 renners uit het complete deelnemersveld (184 renners).' },
@@ -97,7 +97,7 @@ export default function SpelregelsPage() {
 
         {/* Points table */}
         <section>
-          <h2 className="font-display text-4xl text-white mb-2">Puntentelling</h2>
+          <h2 className="font-display text-4xl mb-2" style={{ color: 'var(--tour-text)' }}>Puntentelling</h2>
           <p className="text-sm mb-6" style={{ color: 'var(--tour-text-muted)' }}>
             Per etappe worden de top 10 gefinishte renners beloond. De score per renner = positiepunten × waardecijfer.
           </p>
@@ -118,8 +118,8 @@ export default function SpelregelsPage() {
                     <div
                       className="w-7 h-7 rounded flex items-center justify-center font-display text-sm"
                       style={{
-                        background: i === 0 ? 'rgba(255,215,0,0.2)' : i === 1 ? 'rgba(192,192,192,0.2)' : i === 2 ? 'rgba(205,127,50,0.2)' : 'rgba(255,255,255,0.05)',
-                        color: i === 0 ? '#FFD700' : i === 1 ? '#C0C0C0' : i === 2 ? '#CD7F32' : 'var(--tour-text-muted)',
+                        background: i === 0 ? 'rgba(232,184,0,0.15)' : i === 1 ? 'rgba(160,160,160,0.15)' : i === 2 ? 'rgba(150,90,30,0.12)' : 'rgba(0,0,0,0.04)',
+                        color: i === 0 ? '#C9A000' : i === 1 ? '#888' : i === 2 ? '#8B5E1A' : 'var(--tour-text-muted)',
                       }}
                     >
                       {row.pos}
@@ -140,21 +140,21 @@ export default function SpelregelsPage() {
                 <div className="space-y-4">
                   <div>
                     <div className="text-2xl font-display" style={{ color: 'var(--tour-yellow)' }}>×2</div>
-                    <div className="font-condensed font-bold text-sm text-white">Kopman bonus</div>
+                    <div className="font-condensed font-bold text-sm" style={{ color: 'var(--tour-text)' }}>Kopman bonus</div>
                     <div className="text-xs mt-1" style={{ color: 'var(--tour-text-muted)' }}>
                       Alle punten van jouw kopman worden verdubbeld. Kies verstandig!
                     </div>
                   </div>
                   <div style={{ borderTop: '1px solid var(--tour-border)', paddingTop: '16px' }}>
                     <div className="text-2xl font-display" style={{ color: 'var(--tour-yellow)' }}>×2</div>
-                    <div className="font-condensed font-bold text-sm text-white">Gouden Etappe</div>
+                    <div className="font-condensed font-bold text-sm" style={{ color: 'var(--tour-text)' }}>Gouden Etappe</div>
                     <div className="text-xs mt-1" style={{ color: 'var(--tour-text-muted)' }}>
                       Alle punten die jij scoort op je gouden etappe worden verdubbeld.
                     </div>
                   </div>
                   <div style={{ borderTop: '1px solid var(--tour-border)', paddingTop: '16px' }}>
                     <div className="text-2xl font-display" style={{ color: 'var(--tour-yellow)' }}>×4</div>
-                    <div className="font-condensed font-bold text-sm text-white">Kopman op Gouden Etappe</div>
+                    <div className="font-condensed font-bold text-sm" style={{ color: 'var(--tour-text)' }}>Kopman op Gouden Etappe</div>
                     <div className="text-xs mt-1" style={{ color: 'var(--tour-text-muted)' }}>
                       Als je kopman scoort op jouw gouden etappe, ×2 ×2 = ×4!
                     </div>
@@ -176,12 +176,12 @@ export default function SpelregelsPage() {
 
         {/* Waardecijfer */}
         <section>
-          <h2 className="font-display text-4xl text-white mb-2">Het Waardecijfer</h2>
+          <h2 className="font-display text-4xl mb-2" style={{ color: 'var(--tour-text)' }}>Het Waardecijfer</h2>
           <p className="text-sm mb-6" style={{ color: 'var(--tour-text-muted)' }}>
             Het waardecijfer is de sleutel tot een goede strategie. Populaire renners zijn minder waard!
           </p>
           <div className="card-dark p-6">
-            <div className="font-condensed font-bold text-xl text-white mb-4">
+            <div className="font-condensed font-bold text-xl mb-4" style={{ color: 'var(--tour-text)' }}>
               Waardecijfer = Totaal deelnemers − Aantal keer gekozen
             </div>
             <p className="text-sm leading-relaxed mb-6" style={{ color: 'var(--tour-text-muted)' }}>
@@ -195,8 +195,8 @@ export default function SpelregelsPage() {
                 { name: 'Middenmoter', chosen: 25, total: 50, pts: 15, result: 375 },
                 { name: 'Outsider', chosen: 5, total: 50, pts: 15, result: 675 },
               ].map((ex, i) => (
-                <div key={i} className="rounded-lg p-4 text-center" style={{ background: 'rgba(255,255,255,0.05)' }}>
-                  <div className="font-condensed font-bold text-sm text-white mb-2">{ex.name}</div>
+                <div key={i} className="rounded-lg p-4 text-center" style={{ background: 'var(--tour-bg-card2)', border: '1px solid var(--tour-border)' }}>
+                  <div className="font-condensed font-bold text-sm mb-2" style={{ color: 'var(--tour-text)' }}>{ex.name}</div>
                   <div className="text-xs mb-1" style={{ color: 'var(--tour-text-muted)' }}>{ex.chosen}× gekozen</div>
                   <div className="font-display text-2xl" style={{ color: 'var(--tour-yellow)' }}>{ex.result}</div>
                   <div className="text-xs" style={{ color: 'var(--tour-text-muted)' }}>punten bij etappewinst</div>
@@ -208,7 +208,7 @@ export default function SpelregelsPage() {
 
         {/* GC prediction */}
         <section>
-          <h2 className="font-display text-4xl text-white mb-2">Top 5 Voorspelling</h2>
+          <h2 className="font-display text-4xl mb-2" style={{ color: 'var(--tour-text)' }}>Top 5 Voorspelling</h2>
           <p className="text-sm mb-6" style={{ color: 'var(--tour-text-muted)' }}>
             Voorspel de top 5 eindklassement. Je kunt kiezen uit alle 184 deelnemende renners.
           </p>
@@ -244,7 +244,7 @@ export default function SpelregelsPage() {
 
         {/* Six jerseys */}
         <section>
-          <h2 className="font-display text-4xl text-white mb-2">De Zes Truien</h2>
+          <h2 className="font-display text-4xl mb-2" style={{ color: 'var(--tour-text)' }}>De Zes Truien</h2>
           <p className="text-sm mb-6" style={{ color: 'var(--tour-text-muted)' }}>
             Er zijn zes klassementen — elk met zijn eigen trui en zijn eigen strategie.
           </p>
@@ -257,7 +257,7 @@ export default function SpelregelsPage() {
               >
                 <JerseyIcon type={jersey.type} size={52} className="flex-shrink-0" />
                 <div>
-                  <div className="font-condensed font-bold text-base text-white mb-0.5">{jersey.label}</div>
+                  <div className="font-condensed font-bold text-base mb-0.5" style={{ color: 'var(--tour-text)' }}>{jersey.label}</div>
                   <div className="text-xs font-bold mb-2" style={{ color: jersey.color }}>{jersey.title}</div>
                   <p className="text-xs leading-relaxed" style={{ color: 'var(--tour-text-muted)' }}>{jersey.desc}</p>
                 </div>
@@ -268,7 +268,7 @@ export default function SpelregelsPage() {
 
         {/* CTA */}
         <section className="text-center py-8">
-          <h2 className="font-display text-4xl text-white mb-4">Alles duidelijk?</h2>
+          <h2 className="font-display text-4xl mb-4" style={{ color: 'var(--tour-text)' }}>Alles duidelijk?</h2>
           <a
             href="/meedoen"
             className="inline-block px-10 py-4 rounded-xl font-condensed font-bold text-xl text-black transition-all duration-200 hover:scale-105"

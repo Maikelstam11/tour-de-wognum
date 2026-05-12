@@ -1,17 +1,26 @@
 -- Tour de Wognum Database Schema
 -- Run this against your Neon PostgreSQL database
 
-CREATE TYPE IF NOT EXISTS speciality AS ENUM (
-  'climber', 'sprinter', 'time_trialist', 'gc_contender', 'domestique', 'puncheur'
-);
+DO $$ BEGIN
+  CREATE TYPE speciality AS ENUM (
+    'climber', 'sprinter', 'time_trialist', 'gc_contender', 'domestique', 'puncheur'
+  );
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
 
-CREATE TYPE IF NOT EXISTS stage_type AS ENUM (
-  'flat', 'hilly', 'mountain', 'time_trial', 'team_time_trial'
-);
+DO $$ BEGIN
+  CREATE TYPE stage_type AS ENUM (
+    'flat', 'hilly', 'mountain', 'time_trial', 'team_time_trial'
+  );
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
 
-CREATE TYPE IF NOT EXISTS stage_status AS ENUM (
-  'planned', 'active', 'completed'
-);
+DO $$ BEGIN
+  CREATE TYPE stage_status AS ENUM (
+    'planned', 'active', 'completed'
+  );
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
 
 CREATE TABLE IF NOT EXISTS teams (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),

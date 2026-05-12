@@ -24,15 +24,12 @@ export default async function EtappesPage() {
   return (
     <div className="pt-20">
       {/* Header */}
-      <section
-        className="relative py-16 px-4 sm:px-6 lg:px-8 overflow-hidden"
-        style={{ background: 'linear-gradient(180deg, rgba(26,25,51,0.8) 0%, transparent 100%)' }}
-      >
+      <section className="relative py-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
         <div className="max-w-7xl mx-auto">
-          <div className="font-condensed text-sm font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--tour-yellow)' }}>
+          <div className="font-condensed text-sm font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--tour-yellow-dark)' }}>
             Tour de France 2026
           </div>
-          <h1 className="font-display text-5xl sm:text-7xl text-white mb-4">Alle Etappes</h1>
+          <h1 className="font-display text-5xl sm:text-7xl mb-4" style={{ color: 'var(--tour-text)' }}>Alle Etappes</h1>
           <p className="text-base sm:text-lg max-w-xl" style={{ color: 'var(--tour-text-muted)' }}>
             21 etappes door de mooiste bergen en steden van Europa — van Barcelona tot Parijs.
           </p>
@@ -46,7 +43,7 @@ export default async function EtappesPage() {
               { value: completedCount, label: 'Gereden', unit: '' },
             ].map((stat) => (
               <div key={stat.label}>
-                <div className="font-display text-3xl text-white">
+                <div className="font-display text-3xl" style={{ color: 'var(--tour-text)' }}>
                   {stat.value}<span className="text-lg ml-1" style={{ color: 'var(--tour-text-muted)' }}>{stat.unit}</span>
                 </div>
                 <div className="text-xs uppercase tracking-widest" style={{ color: 'var(--tour-text-muted)' }}>{stat.label}</div>

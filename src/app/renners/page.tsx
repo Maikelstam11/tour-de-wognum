@@ -28,12 +28,12 @@ export default async function RennersPage() {
   return (
     <div className="pt-20">
       {/* Header */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8" style={{ background: 'linear-gradient(180deg, rgba(26,25,51,0.8) 0%, transparent 100%)' }}>
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="font-condensed text-sm font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--tour-yellow)' }}>
+          <div className="font-condensed text-sm font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--tour-yellow-dark)' }}>
             Tour de France 2026
           </div>
-          <h1 className="font-display text-5xl sm:text-7xl text-white mb-4">Renners & Ploegen</h1>
+          <h1 className="font-display text-5xl sm:text-7xl mb-4" style={{ color: 'var(--tour-text)' }}>Renners & Ploegen</h1>
           <p className="text-base sm:text-lg max-w-xl" style={{ color: 'var(--tour-text-muted)' }}>
             {allTeams.length} ploegen · {allRiders.length} renners — de beste wielrenners ter wereld
           </p>
@@ -59,7 +59,7 @@ export default async function RennersPage() {
                   >
                     <TeamJersey primaryColor={team.primaryColor} secondaryColor={team.secondaryColor} size={44} />
                     <div>
-                      <h2 className="font-condensed font-bold text-xl text-white">{team.name}</h2>
+                      <h2 className="font-condensed font-bold text-xl" style={{ color: 'var(--tour-text)' }}>{team.name}</h2>
                       <div className="text-sm" style={{ color: 'var(--tour-text-muted)' }}>{team.country} · {teamRiders.length} renners</div>
                     </div>
                     <div className="flex gap-2 ml-auto">
@@ -79,7 +79,7 @@ export default async function RennersPage() {
                             size={40}
                             className="mb-2"
                           />
-                          <div className="font-condensed font-bold text-xs leading-tight text-white line-clamp-2 mb-1">
+                          <div className="font-condensed font-bold text-xs leading-tight line-clamp-2 mb-1" style={{ color: 'var(--tour-text)' }}>
                             {rider.name}
                           </div>
                           <div className="text-xs" style={{ color: 'var(--tour-text-muted)' }}>

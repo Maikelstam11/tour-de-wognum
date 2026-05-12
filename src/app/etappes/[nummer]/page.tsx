@@ -42,11 +42,11 @@ async function getStageData(nummer: number) {
 }
 
 const typeGradients: Record<string, string> = {
-  flat: 'linear-gradient(135deg, #0a2a0a 0%, #001a08 100%)',
-  hilly: 'linear-gradient(135deg, #2a1800 0%, #1a0d00 100%)',
-  mountain: 'linear-gradient(135deg, #2a0005 0%, #1a0003 100%)',
-  time_trial: 'linear-gradient(135deg, #00102a 0%, #000c1a 100%)',
-  team_time_trial: 'linear-gradient(135deg, #00102a 0%, #000c1a 100%)',
+  flat: 'linear-gradient(135deg, #e8f5ee 0%, #c8eedd 100%)',
+  hilly: 'linear-gradient(135deg, #fff3e0 0%, #ffe0b0 100%)',
+  mountain: 'linear-gradient(135deg, #fde8ea 0%, #fac8cc 100%)',
+  time_trial: 'linear-gradient(135deg, #e6eef8 0%, #c8daf0 100%)',
+  team_time_trial: 'linear-gradient(135deg, #e0ebf5 0%, #c0d5eb 100%)',
 };
 
 const typeIcons: Record<string, string> = {
@@ -79,7 +79,7 @@ export default async function EtappeDetailPage({ params }: Props) {
         <div className="max-w-7xl mx-auto relative z-10">
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 text-sm mb-6" style={{ color: 'var(--tour-text-muted)' }}>
-            <Link href="/etappes" className="hover:text-white transition-colors">Etappes</Link>
+            <Link href="/etappes" className="hover:underline transition-colors">Etappes</Link>
             <span>/</span>
             <span>Etappe {stage.stageNumber}</span>
           </div>
@@ -97,7 +97,7 @@ export default async function EtappeDetailPage({ params }: Props) {
                   <div className="font-condensed text-sm font-bold uppercase tracking-widest mb-1" style={{ color: typeColor }}>
                     {typeIcons[stage.type]} {stageTypeLabel[stage.type]} · {formatDate(stage.date)}
                   </div>
-                  <h1 className="font-display text-4xl sm:text-5xl text-white leading-tight">
+                  <h1 className="font-display text-4xl sm:text-5xl leading-tight" style={{ color: 'var(--tour-text)' }}>
                     {stage.startLocation}
                     <span className="mx-3" style={{ color: typeColor }}>→</span>
                     {stage.finishLocation}
@@ -111,7 +111,7 @@ export default async function EtappeDetailPage({ params }: Props) {
                     </div>
                   )}
                   {stage.status === 'completed' && (
-                    <div className="mt-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-condensed font-bold text-green-300 bg-green-900">
+                    <div className="mt-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-condensed font-bold" style={{ background: '#e6f5ec', color: '#00873F' }}>
                       ✓ Gereden
                     </div>
                   )}
@@ -141,7 +141,7 @@ export default async function EtappeDetailPage({ params }: Props) {
                 ].map((row) => (
                   <div key={row.label} className="flex justify-between items-center" style={{ borderBottom: '1px solid var(--tour-border)', paddingBottom: '12px' }}>
                     <span className="text-sm" style={{ color: 'var(--tour-text-muted)' }}>{row.label}</span>
-                    <span className="font-condensed font-bold text-white">{row.value}</span>
+                    <span className="font-condensed font-bold" style={{ color: 'var(--tour-text)' }}>{row.value}</span>
                   </div>
                 ))}
               </div>
@@ -170,13 +170,13 @@ export default async function EtappeDetailPage({ params }: Props) {
             {/* Climbs */}
             {climbs.length > 0 && (
               <div>
-                <h2 className="font-display text-3xl text-white mb-4">Beklimmingen</h2>
+                <h2 className="font-display text-3xl mb-4" style={{ color: 'var(--tour-text)' }}>Beklimmingen</h2>
                 <div className="space-y-3">
                   {climbs.map((climb: any, i: number) => (
                     <div key={i} className="card-dark p-4">
                       <div className="flex items-start justify-between gap-4">
                         <div>
-                          <div className="font-condensed font-bold text-base text-white">{climb.name}</div>
+                          <div className="font-condensed font-bold text-base" style={{ color: 'var(--tour-text)' }}>{climb.name}</div>
                           <div className="text-sm mt-1" style={{ color: 'var(--tour-text-muted)' }}>
                             {climb.lengthKm} km · {climb.avgGradient}% gemiddeld · {climb.altitude} m
                           </div>
@@ -201,7 +201,7 @@ export default async function EtappeDetailPage({ params }: Props) {
             {/* Results */}
             {results.length > 0 && (
               <div>
-                <h2 className="font-display text-3xl text-white mb-4">Uitslag</h2>
+                <h2 className="font-display text-3xl mb-4" style={{ color: 'var(--tour-text)' }}>Uitslag</h2>
                 <div className="card-dark overflow-hidden">
                   {results.map((r, i) => (
                     <div
@@ -211,15 +211,15 @@ export default async function EtappeDetailPage({ params }: Props) {
                       <div
                         className="w-8 h-8 rounded-lg flex items-center justify-center font-display text-lg font-bold flex-shrink-0"
                         style={{
-                          background: i === 0 ? 'rgba(255,215,0,0.2)' : i === 1 ? 'rgba(192,192,192,0.2)' : i === 2 ? 'rgba(205,127,50,0.2)' : 'rgba(255,255,255,0.05)',
-                          color: i === 0 ? '#FFD700' : i === 1 ? '#C0C0C0' : i === 2 ? '#CD7F32' : 'var(--tour-text-muted)',
+                          background: i === 0 ? 'rgba(232,184,0,0.15)' : i === 1 ? 'rgba(160,160,160,0.15)' : i === 2 ? 'rgba(150,90,30,0.12)' : 'rgba(0,0,0,0.04)',
+                          color: i === 0 ? '#C9A000' : i === 1 ? '#888' : i === 2 ? '#8B5E1A' : 'var(--tour-text-muted)',
                         }}
                       >
                         {r.position}
                       </div>
                       <TeamJersey primaryColor={r.teamPrimary} secondaryColor={r.teamSecondary} size={28} />
                       <div className="flex-1 min-w-0">
-                        <div className="font-condensed font-bold text-sm text-white truncate">
+                        <div className="font-condensed font-bold text-sm truncate" style={{ color: 'var(--tour-text)' }}>
                           {nationalityFlag[r.riderNationality] ?? '🏳️'} {r.riderName}
                         </div>
                         <div className="text-xs truncate" style={{ color: 'var(--tour-text-muted)' }}>{r.teamName}</div>
@@ -238,7 +238,7 @@ export default async function EtappeDetailPage({ params }: Props) {
             {results.length === 0 && stage.status === 'planned' && (
               <div className="card-dark p-12 text-center">
                 <div className="text-4xl mb-3">🚴</div>
-                <div className="font-condensed font-bold text-lg text-white mb-2">Nog niet gereden</div>
+                <div className="font-condensed font-bold text-lg mb-2" style={{ color: 'var(--tour-text)' }}>Nog niet gereden</div>
                 <p className="text-sm" style={{ color: 'var(--tour-text-muted)' }}>
                   De uitslag van deze etappe verschijnt hier zodra hij gereden is.
                 </p>
@@ -248,7 +248,7 @@ export default async function EtappeDetailPage({ params }: Props) {
 
           {/* Navigation sidebar */}
           <div className="space-y-4">
-            <h3 className="font-condensed font-bold text-sm uppercase tracking-widest" style={{ color: 'var(--tour-yellow)' }}>
+            <h3 className="font-condensed font-bold text-sm uppercase tracking-widest" style={{ color: 'var(--tour-yellow-dark)' }}>
               Navigatie
             </h3>
             <div className="flex gap-3">

@@ -47,13 +47,13 @@ export default async function RiderDetailPage({ params }: Props) {
         className="relative py-16 px-4 sm:px-6 lg:px-8 overflow-hidden"
         style={{
           background: team
-            ? `linear-gradient(135deg, ${team.primaryColor}20 0%, ${team.secondaryColor}10 50%, transparent 100%)`
-            : 'linear-gradient(135deg, rgba(26,25,51,0.8) 0%, transparent 100%)',
+            ? `linear-gradient(135deg, ${team.primaryColor}15 0%, ${team.secondaryColor}08 50%, transparent 100%)`
+            : undefined,
         }}
       >
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center gap-2 text-sm mb-6" style={{ color: 'var(--tour-text-muted)' }}>
-            <Link href="/renners" className="hover:text-white transition-colors">Renners</Link>
+            <Link href="/renners" className="hover:underline transition-colors">Renners</Link>
             <span>/</span>
             <span>{rider.name}</span>
           </div>
@@ -71,7 +71,7 @@ export default async function RiderDetailPage({ params }: Props) {
               <div className="font-condensed text-sm font-bold uppercase tracking-widest mb-2" style={{ color: team?.primaryColor ?? 'var(--tour-yellow)' }}>
                 {flag} {rider.nationality}
               </div>
-              <h1 className="font-display text-5xl sm:text-6xl text-white leading-none mb-3">
+              <h1 className="font-display text-5xl sm:text-6xl leading-none mb-3" style={{ color: 'var(--tour-text)' }}>
                 {rider.name}
               </h1>
               {team && (
@@ -101,7 +101,7 @@ export default async function RiderDetailPage({ params }: Props) {
                 </div>
               )}
               <div className="card-dark p-4 text-center min-w-[120px]">
-                <div className="font-display text-4xl text-white">{timesChosen}</div>
+                <div className="font-display text-4xl" style={{ color: 'var(--tour-text)' }}>{timesChosen}</div>
                 <div className="text-xs uppercase tracking-widest mt-1" style={{ color: 'var(--tour-text-muted)' }}>Keer gekozen</div>
               </div>
             </div>

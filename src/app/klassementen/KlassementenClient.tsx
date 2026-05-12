@@ -78,7 +78,7 @@ function StandingsTable({
             <div className="text-xs font-condensed font-bold uppercase tracking-widest mb-1" style={{ color }}>
               Drager van de trui
             </div>
-            <div className="font-display text-3xl text-white">{leader.name}</div>
+            <div className="font-display text-3xl" style={{ color: 'var(--tour-text)' }}>{leader.name}</div>
             <div className="font-display text-xl mt-1" style={{ color }}>{leaderPts} punten</div>
           </div>
         </div>
@@ -110,7 +110,7 @@ function StandingsTable({
               <div
                 className="w-8 h-8 rounded flex items-center justify-center font-display text-base flex-shrink-0"
                 style={{
-                  background: rank === 1 ? `${color}25` : 'rgba(255,255,255,0.05)',
+                  background: rank === 1 ? `${color}20` : 'rgba(0,0,0,0.04)',
                   color: rank === 1 ? color : 'var(--tour-text-muted)',
                 }}
               >
@@ -166,12 +166,12 @@ export default function KlassementenClient({ general, sprint, mountain, young, d
   return (
     <div className="pt-20">
       {/* Header */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8" style={{ background: 'linear-gradient(180deg, rgba(26,25,51,0.8) 0%, transparent 100%)' }}>
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
-          <div className="font-condensed text-sm font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--tour-yellow)' }}>
+          <div className="font-condensed text-sm font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--tour-yellow-dark)' }}>
             Tour de Wognum 2026
           </div>
-          <h1 className="font-display text-5xl sm:text-7xl text-white mb-4">Klassementen</h1>
+          <h1 className="font-display text-5xl sm:text-7xl mb-4" style={{ color: 'var(--tour-text)' }}>Klassementen</h1>
           <p className="text-base" style={{ color: 'var(--tour-text-muted)' }}>
             {totalParticipants} deelnemers · {stagesData.length} etappes gereden
           </p>

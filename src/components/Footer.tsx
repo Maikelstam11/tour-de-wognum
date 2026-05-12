@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export default function Footer() {
   return (
-    <footer style={{ background: 'rgba(15, 14, 23, 0.95)', borderTop: '1px solid var(--tour-border)' }}>
+    <footer style={{ background: 'var(--tour-bg-card2)', borderTop: '1px solid var(--tour-border)' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {/* Brand */}
@@ -32,7 +32,7 @@ export default function Footer() {
                 <Link
                   key={l.href}
                   href={l.href}
-                  className="block text-sm transition-colors hover:text-white"
+                  className="block text-sm transition-colors hover:text-black"
                   style={{ color: 'var(--tour-text-muted)' }}
                 >
                   {l.label}
