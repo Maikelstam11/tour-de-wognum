@@ -1,203 +1,246 @@
 @import "tailwindcss";
 
+/* ── Design tokens ─────────────────────────────────────────────────── */
 :root {
-  --tour-yellow: #E8B800;
-  --tour-yellow-dark: #C9A000;
-  --tour-yellow-light: #FFF3B0;
-  --tour-green: #00873F;
-  --tour-red: #CC0015;
-  --tour-blue: #0055A4;
-  --tour-bg: #F5F4F0;
-  --tour-bg-card: #FFFFFF;
-  --tour-bg-card2: #F9F8F5;
-  --tour-border: #E2DFD6;
-  --tour-border-strong: #C8C4B8;
-  --tour-text: #1A1814;
-  --tour-text-muted: #6B6860;
-  --tour-text-light: #9C9890;
+  /* Surfaces */
+  --bg-0:        #08080C;
+  --bg-1:        #0E0E14;
+  --bg-2:        #14141C;
+  --bg-3:        #1B1B24;
+  --bg-4:        #23232E;
+
+  /* Text */
+  --text-1:      rgba(255,255,255,0.95);
+  --text-2:      rgba(255,255,255,0.70);
+  --text-3:      rgba(255,255,255,0.46);
+  --text-4:      rgba(255,255,255,0.30);
+  --text-5:      rgba(255,255,255,0.16);
+
+  /* Foreground aliases (design bundle naming) */
+  --fg-0: var(--text-1);
+  --fg-1: var(--text-1);
+  --fg-2: var(--text-2);
+  --fg-3: var(--text-3);
+  --fg-4: var(--text-4);
+
+  /* Lines */
+  --line:        rgba(255,255,255,0.06);
+  --line-2:      rgba(255,255,255,0.10);
+  --line-3:      rgba(255,255,255,0.18);
+
+  /* Accent — electric yellow-green */
+  --accent:      #D9FF3F;
+  --accent-2:    #B4E600;
+  --accent-deep: #0E1500;
+  --accent-glow: rgba(217,255,63,0.18);
+
+  /* Stage type palette */
+  --t-vlak:      #34D399;
+  --t-heuv:      #F59E0B;
+  --t-berg:      #F43F5E;
+  --t-itt:       #60A5FA;
+  --t-ttt:       #A78BFA;
+  --t-rust:      rgba(255,255,255,0.30);
+
+  /* Legacy aliases for existing components */
+  --tour-yellow:       var(--accent);
+  --tour-yellow-dark:  var(--accent-2);
+  --tour-yellow-light: rgba(217,255,63,0.15);
+  --tour-green:        var(--t-vlak);
+  --tour-red:          var(--t-berg);
+  --tour-blue:         var(--t-itt);
+  --tour-bg:           var(--bg-1);
+  --tour-bg-card:      var(--bg-2);
+  --tour-bg-card2:     var(--bg-3);
+  --tour-border:       var(--line);
+  --tour-border-strong: var(--line-2);
+  --tour-text:         var(--text-1);
+  --tour-text-muted:   var(--text-3);
+  --tour-text-light:   var(--text-4);
+
+  /* Layout */
+  --r-sm:  8px;
+  --r-md:  14px;
+  --r-lg:  20px;
+  --r-xl:  28px;
+  --r-pill: 999px;
+
+  /* Elevation */
+  --shadow-card:   0 1px 0 rgba(255,255,255,0.04) inset, 0 20px 60px -28px rgba(0,0,0,0.8);
+  --shadow-pop:    0 2px 0 rgba(255,255,255,0.05) inset, 0 28px 80px -28px rgba(0,0,0,0.9);
+  --shadow-accent: 0 0 0 1px rgba(217,255,63,0.45), 0 12px 40px -10px rgba(217,255,63,0.18);
+
+  /* Fonts */
+  --f-sans:    var(--font-geist-sans), 'Inter', system-ui, sans-serif;
+  --f-mono:    var(--font-geist-mono), ui-monospace, 'SF Mono', monospace;
+  --f-display: var(--font-geist-sans), 'Inter', system-ui, sans-serif;
 }
 
 @theme inline {
-  --color-background: var(--tour-bg);
-  --color-foreground: var(--tour-text);
-  --font-display: 'Bebas Neue', sans-serif;
-  --font-condensed: 'Barlow Condensed', sans-serif;
-  --font-sans: 'Inter', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --color-background: var(--bg-1);
+  --color-foreground: var(--text-1);
+  --font-sans: var(--f-sans);
+  --font-mono: var(--f-mono);
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
-  background: var(--tour-bg);
-  color: var(--tour-text);
-  font-family: 'Inter', sans-serif;
+  background: var(--bg-1);
+  color: var(--text-1);
+  font-family: var(--f-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
   overflow-x: hidden;
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-::-webkit-scrollbar-track {
-  background: var(--tour-bg);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--tour-border-strong);
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--tour-yellow);
-}
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-0); }
+::-webkit-scrollbar-thumb { background: var(--line-3); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+::selection { background: var(--accent); color: var(--accent-deep); }
 
-/* Selection */
-::selection {
-  background: var(--tour-yellow);
-  color: #000;
-}
-
-/* Display font */
-.font-display {
-  font-family: 'Bebas Neue', sans-serif;
-  letter-spacing: 0.05em;
-}
-
-.font-condensed {
-  font-family: 'Barlow Condensed', sans-serif;
-}
-
-/* Animations */
-@keyframes shimmer {
-  0% { background-position: -200% center; }
-  100% { background-position: 200% center; }
-}
-
-@keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(232, 184, 0, 0.25); }
-  50% { box-shadow: 0 0 40px rgba(232, 184, 0, 0.5); }
-}
-
-@keyframes countdown-tick {
-  0% { transform: scale(1.05); }
-  100% { transform: scale(1); }
-}
-
-.glow-yellow {
-  animation: pulse-glow 2s ease-in-out infinite;
-}
-
-/* Hero — donker blok bovenaan, licht eronder */
-.hero-gradient {
-  background: linear-gradient(
-    180deg,
-    #1A1814 0%,
-    #2A2620 60%,
-    #1A1814 100%
-  );
-}
-
-/* Card styles — licht, met subtiele schaduw */
-.card-dark {
-  background: var(--tour-bg-card);
-  border: 1px solid var(--tour-border);
-  border-radius: 12px;
-  transition: all 0.2s ease;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-}
-
-.card-dark:hover {
-  border-color: var(--tour-yellow);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 24px rgba(0,0,0,0.1);
-}
-
-/* Stage type gradients — licht met kleuraccent */
-.stage-flat { background: linear-gradient(135deg, #e8f5ee 0%, #c8eedd 100%); border-color: #00873F40; }
-.stage-hilly { background: linear-gradient(135deg, #fff3e0 0%, #ffe0b0 100%); border-color: #FF8C0040; }
-.stage-mountain { background: linear-gradient(135deg, #fde8ea 0%, #fac8cc 100%); border-color: #CC001540; }
-.stage-time_trial { background: linear-gradient(135deg, #e6eef8 0%, #c8daf0 100%); border-color: #0055A440; }
-.stage-team_time_trial { background: linear-gradient(135deg, #e0ebf5 0%, #c0d5eb 100%); border-color: #003d8f40; }
-
-/* Polka dot pattern */
-.polka-dots {
-  background-image: radial-gradient(circle, #CC0015 20%, transparent 20%);
-  background-size: 8px 8px;
-}
-
-/* Gradient text — donkerder geel voor lichte achtergrond */
-.text-gradient-yellow {
-  background: linear-gradient(135deg, #C9A000, #E8B800);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Table styles */
-.standings-row {
-  border-bottom: 1px solid var(--tour-border);
-  transition: background 0.15s;
-}
-.standings-row:hover {
-  background: #FFFBEA;
-}
-
-/* Form styles */
-.form-input {
-  background: var(--tour-bg-card);
-  border: 1px solid var(--tour-border-strong);
-  border-radius: 8px;
-  color: var(--tour-text);
-  padding: 12px 16px;
-  width: 100%;
-  transition: border-color 0.2s;
-  font-family: 'Inter', sans-serif;
-}
-.form-input:focus {
-  outline: none;
-  border-color: var(--tour-yellow);
-  box-shadow: 0 0 0 3px rgba(232, 184, 0, 0.15);
-}
-.form-input::placeholder {
-  color: var(--tour-text-light);
-}
-
-select.form-input option {
-  background: white;
-  color: var(--tour-text);
-}
-
-.form-label {
-  display: block;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 700;
-  font-size: 12px;
-  text-transform: uppercase;
+/* ── Type scale ────────────────────────────────────────────────────── */
+.eyebrow {
+  font-family: var(--f-mono);
+  font-size: 11px;
   letter-spacing: 0.08em;
-  color: var(--tour-text-muted);
-  margin-bottom: 6px;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.label-mono {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.num {
+  font-family: var(--f-display);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  font-feature-settings: 'tnum' 1, 'lnum' 1;
+  line-height: 1;
+}
+.display-heading {
+  font-family: var(--f-display);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
 }
 
-/* Confetti */
-@keyframes confetti-fall {
-  0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
-  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+/* Keep legacy font-display for admin pages */
+.font-display {
+  font-family: var(--f-display);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+.font-condensed {
+  font-family: var(--f-mono);
+  letter-spacing: 0.04em;
 }
 
-.confetti-piece {
-  position: fixed;
-  width: 10px;
-  height: 10px;
-  animation: confetti-fall linear forwards;
+/* ── Card system ───────────────────────────────────────────────────── */
+.card {
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-card);
+  position: relative;
+  transition: background .2s, border-color .2s;
+}
+.card:hover { background: var(--bg-3); border-color: var(--line-2); }
+.card-accent {
+  background: var(--accent);
+  color: var(--accent-deep);
+  border-color: transparent;
+  box-shadow: var(--shadow-accent);
+}
+.card-accent:hover { background: var(--accent); }
+.card-ink {
+  background: linear-gradient(180deg, var(--bg-3), var(--bg-2));
+  border-color: var(--line);
+}
+/* Legacy card-dark used in admin */
+.card-dark {
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-card);
+  position: relative;
+  transition: background .2s, border-color .2s;
+}
+.card-dark:hover { background: var(--bg-3); border-color: var(--line-2); }
+
+/* ── Buttons ───────────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: var(--r-pill);
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: var(--bg-3);
+  color: var(--text-1);
+  border: 1px solid var(--line-2);
+  cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+.btn:hover { background: var(--bg-4); border-color: var(--line-3); }
+.btn-primary { background: var(--accent); color: var(--accent-deep); border-color: transparent; font-weight: 700; }
+.btn-primary:hover { background: var(--accent-2); }
+.btn-ghost { background: transparent; }
+
+/* ── Chips & badges ────────────────────────────────────────────────── */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px 4px;
+  border-radius: var(--r-pill);
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: var(--bg-3);
+  color: var(--text-2);
+  border: 1px solid var(--line);
+  cursor: pointer;
+  transition: background .15s;
+}
+.chip-active { background: var(--text-1); color: var(--bg-1); border-color: transparent; }
+.chip-y      { background: var(--accent); color: var(--accent-deep); border-color: transparent; }
+.chip-o      { background: transparent; color: var(--text-2); border-color: var(--line-2); }
+.chip-o:hover { background: var(--bg-3); }
+
+.badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px 4px;
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: var(--r-pill);
+  background: var(--bg-3);
+  color: var(--text-2);
+  border: 1px solid var(--line);
+}
+.badge-yellow {
+  background: rgba(217,255,63,0.16);
+  color: var(--accent);
+  border-color: rgba(217,255,63,0.35);
 }
 
-/* Rider specialty badges */
+/* Legacy badge (admin) */
 .badge {
   display: inline-flex;
   align-items: center;
@@ -206,26 +249,197 @@ select.form-input option {
   border-radius: 100px;
   font-size: 11px;
   font-weight: 600;
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: var(--f-mono);
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
+.badge-climber    { background: rgba(244,63,94,0.15); color: var(--t-berg); }
+.badge-sprinter   { background: rgba(52,211,153,0.15); color: var(--t-vlak); }
+.badge-time_trialist { background: rgba(96,165,250,0.15); color: var(--t-itt); }
+.badge-gc_contender  { background: rgba(217,255,63,0.15); color: var(--accent); }
+.badge-domestique    { background: var(--bg-4); color: var(--text-3); }
+.badge-puncheur      { background: rgba(245,158,11,0.15); color: var(--t-heuv); }
 
-.badge-climber { background: #fde8ea; color: #CC0015; border: 1px solid #CC001530; }
-.badge-sprinter { background: #e6f5ec; color: #00873F; border: 1px solid #00873F30; }
-.badge-time_trialist { background: #e6eef8; color: #0055A4; border: 1px solid #0055A430; }
-.badge-gc_contender { background: #fffbe6; color: #C9A000; border: 1px solid #E8B80040; }
-.badge-domestique { background: #f0eeeb; color: #6B6860; border: 1px solid #C8C4B840; }
-.badge-puncheur { background: #fff3e0; color: #D07000; border: 1px solid #FF8C0040; }
+/* ── Live elements ─────────────────────────────────────────────────── */
+.live-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--t-berg);
+  display: inline-block;
+  animation: tdw-pulse 1.6s ease-in-out infinite;
+}
+.live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 11px 4px;
+  background: rgba(244,63,94,0.14);
+  color: #FFB7C0;
+  border: 1px solid rgba(244,63,94,0.4);
+  border-radius: var(--r-pill);
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
 
-/* Number animation */
+/* ── Stage cards (etappes grid) ────────────────────────────────────── */
+.stage-card {
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 18px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform .18s, background .18s, border-color .18s;
+  cursor: pointer;
+  min-height: 220px;
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+.stage-card:hover { background: var(--bg-3); border-color: var(--line-2); transform: translateY(-2px); }
+.stage-card.is-today {
+  background: linear-gradient(180deg, rgba(217,255,63,0.16), var(--bg-2) 65%);
+  border-color: var(--accent);
+}
+.stage-card.is-done { opacity: 0.55; }
+
+/* ── Type badge dots ───────────────────────────────────────────────── */
+.dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.dot-flat { background: var(--t-vlak); }
+.dot-hilly, .dot-H { background: var(--t-heuv); }
+.dot-mountain, .dot-B { background: var(--t-berg); }
+.dot-time_trial, .dot-T { background: var(--t-itt); }
+.dot-team_time_trial, .dot-P { background: var(--t-ttt); }
+.dot-rest_day { background: var(--text-5); }
+
+/* ── Standings table rows ──────────────────────────────────────────── */
+.standings-row {
+  border-bottom: 1px solid var(--line);
+  transition: background .12s;
+}
+.standings-row:hover { background: var(--bg-3); }
+
+/* ── Race track ────────────────────────────────────────────────────── */
+.race-track {
+  position: relative; height: 6px;
+  background: var(--line); border-radius: 999px; overflow: visible;
+}
+.race-fill {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  background: var(--accent); border-radius: 999px;
+  transform-origin: left;
+  animation: tdw-bar 1.2s cubic-bezier(.2,.7,.3,1) both;
+}
+.race-dot {
+  position: absolute; top: 50%;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px rgba(217,255,63,0.18), 0 0 24px 4px rgba(217,255,63,0.45);
+  transform: translate(-50%,-50%);
+  animation: tdw-rider 2.4s ease-in-out infinite;
+}
+
+/* ── Section alt (used in some pages) ─────────────────────────────── */
+.section-alt { background: var(--bg-0); }
+
+/* ── Form inputs (admin) ───────────────────────────────────────────── */
+.form-input {
+  background: var(--bg-3);
+  border: 1px solid var(--line-2);
+  border-radius: 8px;
+  color: var(--text-1);
+  padding: 12px 16px;
+  width: 100%;
+  transition: border-color .2s;
+  font-family: var(--f-sans);
+}
+.form-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(217,255,63,0.15);
+}
+.form-input::placeholder { color: var(--text-4); }
+select.form-input option { background: var(--bg-2); color: var(--text-1); }
+
+.form-label {
+  display: block;
+  font-family: var(--f-mono);
+  font-weight: 700;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-3);
+  margin-bottom: 6px;
+}
+
+/* ── Animations ────────────────────────────────────────────────────── */
+@keyframes tdw-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+@keyframes tdw-rise {
+  from { transform: translateY(8px); opacity: 0; }
+  to   { transform: translateY(0);   opacity: 1; }
+}
+@keyframes tdw-bar {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+@keyframes tdw-rider {
+  0%   { left: 38%; }
+  50%  { left: 41%; }
+  100% { left: 38%; }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
 @keyframes number-pop {
-  0% { transform: scale(1.2); }
+  0%   { transform: scale(1.2); }
   100% { transform: scale(1); }
 }
-.number-pop { animation: number-pop 0.3s ease-out; }
+@keyframes confetti-fall {
+  0%   { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
 
-/* Section alt background */
-.section-alt {
-  background: #EEECEA;
+.rise           { animation: tdw-rise 0.5s cubic-bezier(.2,.7,.3,1) both; }
+.rise-delay-1   { animation-delay: 0.05s; }
+.rise-delay-2   { animation-delay: 0.10s; }
+.rise-delay-3   { animation-delay: 0.15s; }
+.rise-delay-4   { animation-delay: 0.20s; }
+.number-pop     { animation: number-pop 0.3s ease-out; }
+.confetti-piece {
+  position: fixed; width: 10px; height: 10px;
+  animation: confetti-fall linear forwards;
+}
+
+/* ── Subtle grid bg ────────────────────────────────────────────────── */
+.grid-bg {
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 56px 56px;
+  background-position: -1px -1px;
+}
+
+/* ── Gradient text ─────────────────────────────────────────────────── */
+.text-gradient-yellow {
+  background: linear-gradient(95deg, var(--accent) 0%, #FFF8B0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Hero (kept dark on homepage) ─────────────────────────────────── */
+.hero-gradient {
+  background: linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 100%);
+}
+
+/* ── Polka ─────────────────────────────────────────────────────────── */
+.polka-dots {
+  background-image: radial-gradient(circle, rgba(244,63,94,0.5) 20%, transparent 20%);
+  background-size: 8px 8px;
 }

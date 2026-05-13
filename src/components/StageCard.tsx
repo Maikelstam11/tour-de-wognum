@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { stageTypeLabel, stageTypeColor } from '@/lib/scoring';
+import { stageTypeLabel } from '@/lib/scoring';
 import { formatShortDate } from '@/lib/utils';
 
 interface StageCardProps {
@@ -21,57 +21,66 @@ interface StageCardProps {
   onSelect?: () => void;
 }
 
-const typeGradients: Record<string, string> = {
-  flat: 'linear-gradient(135deg, #e8f5ee 0%, #c8eedd 100%)',
-  hilly: 'linear-gradient(135deg, #fff3e0 0%, #ffe0b0 100%)',
-  mountain: 'linear-gradient(135deg, #fde8ea 0%, #fac8cc 100%)',
-  time_trial: 'linear-gradient(135deg, #e6eef8 0%, #c8daf0 100%)',
-  team_time_trial: 'linear-gradient(135deg, #e0ebf5 0%, #c0d5eb 100%)',
+const typeColor: Record<string, string> = {
+  flat: 'var(--t-vlak)',
+  hilly: 'var(--t-heuv)',
+  mountain: 'var(--t-berg)',
+  time_trial: 'var(--t-itt)',
+  team_time_trial: 'var(--t-ttt)',
+  rest_day: 'var(--t-rust)',
 };
 
-const typeIcons: Record<string, string> = {
+const typeIcon: Record<string, string> = {
   flat: '🟢',
   hilly: '🟠',
   mountain: '🔴',
   time_trial: '🔵',
   team_time_trial: '🔷',
+  rest_day: '⚪',
 };
 
 export default function StageCard({ stage, compact = false, selected = false, onSelect }: StageCardProps) {
-  const typeColor = stageTypeColor[stage.type] ?? '#888';
-  const typeLabel = stageTypeLabel[stage.type] ?? stage.type;
-  const typeIcon = typeIcons[stage.type] ?? '⚪';
+  const color = typeColor[stage.type] ?? 'var(--fg-3)';
+  const icon = typeIcon[stage.type] ?? '⚪';
+  const label = stageTypeLabel[stage.type] ?? stage.type;
+  const distStr = Number(stage.distanceKm).toLocaleString('nl-NL', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 
   if (compact) {
     const content = (
       <div
         onClick={onSelect}
-        className={`flex items-center gap-3 p-3 rounded-lg border transition-all duration-200 ${onSelect ? 'cursor-pointer' : ''}`}
+        className={`flex items-center gap-3 p-3 rounded-xl border transition-all duration-150 ${onSelect ? 'cursor-pointer hover:scale-[1.01]' : ''}`}
         style={{
-          background: selected ? 'rgba(255,215,0,0.1)' : 'var(--tour-bg-card)',
-          borderColor: selected ? 'rgba(255,215,0,0.5)' : 'var(--tour-border)',
+          background: selected ? 'rgba(217,255,63,0.08)' : 'var(--bg-2)',
+          borderColor: selected ? 'rgba(217,255,63,0.4)' : 'var(--line)',
         }}
       >
         <div
           className="w-10 h-10 rounded-lg flex items-center justify-center font-display text-sm font-bold flex-shrink-0"
-          style={{ background: typeGradients[stage.type], border: `1px solid ${typeColor}40`, color: typeColor }}
+          style={{ background: `color-mix(in srgb, ${color} 15%, transparent)`, color }}
         >
           {stage.stageNumber}
         </div>
         <div className="flex-1 min-w-0">
-          <div className="text-sm font-condensed font-bold truncate">
+          <div className="text-sm font-bold truncate" style={{ color: 'var(--fg-0)' }}>
             {stage.startLocation} → {stage.finishLocation}
           </div>
-          <div className="text-xs" style={{ color: 'var(--tour-text-muted)' }}>
-            {formatShortDate(stage.date)} · {Number(stage.distanceKm).toLocaleString('nl-NL', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} km
+          <div className="text-xs mt-0.5" style={{ color: 'var(--fg-3)' }}>
+            {formatShortDate(stage.date)} · {distStr} km
           </div>
         </div>
-        <div className="text-xs font-condensed font-bold px-2 py-0.5 rounded flex-shrink-0" style={{ color: typeColor, background: `${typeColor}20` }}>
-          {typeIcon} {typeLabel}
+        <div
+          className="text-xs font-bold px-2 py-0.5 rounded-lg flex-shrink-0"
+          style={{ color, background: `color-mix(in srgb, ${color} 15%, transparent)` }}
+        >
+          {icon} {label}
         </div>
         {selected && (
-          <div className="w-5 h-5 rounded-full bg-yellow-400 flex items-center justify-center flex-shrink-0">
-            <span className="text-black text-xs font-bold">★</span>
+          <div
+            className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-xs font-bold"
+            style={{ background: 'var(--accent)', color: 'var(--accent-deep)' }}
+          >
+            ★
           </div>
         )}
       </div>
@@ -81,81 +90,105 @@ export default function StageCard({ stage, compact = false, selected = false, on
 
   const card = (
     <div
-      className={`relative rounded-xl overflow-hidden border transition-all duration-200 group ${!onSelect ? 'hover:-translate-y-1 hover:shadow-2xl cursor-pointer' : ''} ${onSelect ? 'cursor-pointer' : ''}`}
+      className={`relative rounded-2xl overflow-hidden border transition-all duration-200 group ${!onSelect ? 'hover:-translate-y-1 hover:shadow-2xl cursor-pointer' : ''} ${onSelect ? 'cursor-pointer' : ''}`}
       style={{
-        background: typeGradients[stage.type],
-        borderColor: selected ? '#FFD700' : `${typeColor}40`,
-        boxShadow: selected ? '0 0 20px rgba(255,215,0,0.3)' : undefined,
+        background: 'var(--bg-2)',
+        borderColor: selected ? 'rgba(217,255,63,0.5)' : 'var(--line)',
+        boxShadow: selected ? 'var(--shadow-accent)' : 'var(--shadow-card)',
       }}
       onClick={onSelect}
     >
+      {/* Color accent line at top */}
+      <div className="h-0.5 w-full" style={{ background: color }} />
+
       {/* Status badge */}
       {stage.status === 'completed' && (
-        <div className="absolute top-3 right-3 text-xs font-condensed font-bold px-2 py-0.5 rounded-full bg-green-700 text-green-200">
+        <div
+          className="absolute top-3 right-3 text-xs font-bold px-2 py-0.5 rounded-lg"
+          style={{ background: 'rgba(52,211,153,0.15)', color: 'var(--t-vlak)', border: '1px solid rgba(52,211,153,0.3)' }}
+        >
           ✓ Gereden
         </div>
       )}
       {stage.status === 'active' && (
-        <div className="absolute top-3 right-3 text-xs font-condensed font-bold px-2 py-0.5 rounded-full animate-pulse" style={{ background: 'var(--tour-yellow)', color: '#000' }}>
-          🔴 Live
+        <div className="absolute top-3 right-3">
+          <span className="live-badge">LIVE</span>
         </div>
       )}
-      {selected && (
-        <div className="absolute top-3 right-3 w-6 h-6 rounded-full bg-yellow-400 flex items-center justify-center">
-          <span className="text-black text-xs font-bold">★</span>
+      {selected && stage.status !== 'active' && (
+        <div
+          className="absolute top-3 right-3 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold"
+          style={{ background: 'var(--accent)', color: 'var(--accent-deep)' }}
+        >
+          ★
         </div>
       )}
 
       <div className="p-5">
         {/* Stage number & type */}
-        <div className="flex items-start justify-between mb-3">
+        <div className="flex items-start justify-between mb-4">
           <div>
-            <div className="font-display text-5xl leading-none" style={{ color: typeColor, opacity: 0.6 }}>
+            <div className="font-display text-5xl leading-none" style={{ color, opacity: 0.7 }}>
               {stage.stageNumber}
             </div>
-            <div className="font-condensed text-xs font-bold uppercase tracking-widest -mt-1" style={{ color: typeColor }}>
+            <div className="text-xs font-bold uppercase tracking-widest mt-0.5" style={{ color: 'var(--fg-3)' }}>
               Etappe
             </div>
           </div>
-          <div className="text-xs font-condensed font-bold px-2 py-1 rounded" style={{ background: `${typeColor}25`, color: typeColor, border: `1px solid ${typeColor}40` }}>
-            {typeIcon} {typeLabel}
+          <div
+            className="text-xs font-bold px-2.5 py-1 rounded-xl mt-1"
+            style={{ background: `color-mix(in srgb, ${color} 15%, transparent)`, color, border: `1px solid color-mix(in srgb, ${color} 30%, transparent)` }}
+          >
+            {icon} {label}
           </div>
         </div>
 
         {/* Route */}
         <div className="mb-3">
-          <div className="font-condensed font-bold text-base leading-tight" style={{ color: 'var(--tour-text)' }}>
+          <div className="font-bold text-sm leading-tight" style={{ color: 'var(--fg-0)' }}>
             {stage.startLocation}
           </div>
-          <div className="text-xs" style={{ color: 'var(--tour-text-muted)' }}>↓</div>
-          <div className="font-condensed font-bold text-base leading-tight" style={{ color: 'var(--tour-text)' }}>
+          <div className="text-xs my-0.5" style={{ color: 'var(--fg-3)' }}>↓</div>
+          <div className="font-bold text-sm leading-tight" style={{ color: 'var(--fg-0)' }}>
             {stage.finishLocation}
           </div>
         </div>
 
         {/* Date */}
-        <div className="text-xs mb-4" style={{ color: 'var(--tour-text-muted)' }}>
+        <div className="text-xs mb-4" style={{ color: 'var(--fg-3)' }}>
           {formatShortDate(stage.date)}
         </div>
 
         {/* Stats */}
-        <div className="flex gap-4 pt-3" style={{ borderTop: `1px solid ${typeColor}40` }}>
+        <div className="flex gap-4 pt-3" style={{ borderTop: '1px solid var(--line)' }}>
           <div>
-            <div className="font-display text-lg leading-none" style={{ color: 'var(--tour-text)' }}>{Number(stage.distanceKm).toLocaleString('nl-NL', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</div>
-            <div className="text-xs" style={{ color: 'var(--tour-text-muted)' }}>km</div>
+            <div className="font-display text-lg leading-none" style={{ color: 'var(--fg-0)' }}>{distStr}</div>
+            <div className="text-xs" style={{ color: 'var(--fg-3)' }}>km</div>
           </div>
           {stage.elevationMeters > 0 && (
             <div>
-              <div className="font-display text-lg leading-none" style={{ color: 'var(--tour-text)' }}>{stage.elevationMeters.toLocaleString('nl-NL')}</div>
-              <div className="text-xs" style={{ color: 'var(--tour-text-muted)' }}>hm</div>
+              <div className="font-display text-lg leading-none" style={{ color: 'var(--fg-0)' }}>
+                {stage.elevationMeters.toLocaleString('nl-NL')}
+              </div>
+              <div className="text-xs" style={{ color: 'var(--fg-3)' }}>hm</div>
             </div>
           )}
-          <div className="ml-auto flex gap-1">
+          <div className="ml-auto flex gap-1 items-center">
             {stage.isSprintStage && (
-              <span className="text-xs px-1.5 py-0.5 rounded" style={{ background: '#e6f5ec', color: '#00873F' }}>⚡ Sprint</span>
+              <span
+                className="text-xs px-1.5 py-0.5 rounded-lg"
+                style={{ background: 'rgba(52,211,153,0.12)', color: 'var(--t-vlak)' }}
+              >
+                ⚡ Sprint
+              </span>
             )}
             {stage.isMountainStage && (
-              <span className="text-xs px-1.5 py-0.5 rounded" style={{ background: '#fde8ea', color: '#CC0015' }}>⛰️ Berg</span>
+              <span
+                className="text-xs px-1.5 py-0.5 rounded-lg"
+                style={{ background: 'rgba(244,63,94,0.12)', color: 'var(--t-berg)' }}
+              >
+                ⛰️ Berg
+              </span>
             )}
           </div>
         </div>

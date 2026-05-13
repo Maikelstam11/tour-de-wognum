@@ -1,11 +1,8 @@
 import { db } from '@/db';
 import { stages } from '@/db/schema';
 import StageCard from '@/components/StageCard';
-import { stageTypeLabel } from '@/lib/scoring';
 
 export const revalidate = 60;
-
-const typeFilters = ['all', 'flat', 'hilly', 'mountain', 'time_trial', 'team_time_trial'];
 
 async function getStages() {
   try {
@@ -15,6 +12,15 @@ async function getStages() {
   }
 }
 
+const typeFilters = [
+  { key: 'flat', label: 'Vlak', color: 'var(--t-vlak)' },
+  { key: 'hilly', label: 'Heuvelachtig', color: 'var(--t-heuv)' },
+  { key: 'mountain', label: 'Berg', color: 'var(--t-berg)' },
+  { key: 'time_trial', label: 'Tijdrit', color: 'var(--t-itt)' },
+  { key: 'team_time_trial', label: 'Ploegentijdrit', color: 'var(--t-ttt)' },
+  { key: 'rest_day', label: 'Rustdag', color: 'var(--t-rust)' },
+];
+
 export default async function EtappesPage() {
   const allStages = await getStages();
   const completedCount = allStages.filter(s => s.status === 'completed').length;
@@ -22,31 +28,32 @@ export default async function EtappesPage() {
   const totalElev = allStages.reduce((sum, s) => sum + s.elevationMeters, 0);
 
   return (
-    <div className="pt-20">
+    <div className="pt-16" style={{ minHeight: '100vh', background: 'var(--bg-1)' }}>
       {/* Header */}
-      <section className="relative py-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      <section className="relative py-16 px-4 sm:px-6 lg:px-8 overflow-hidden" style={{ background: 'var(--bg-0)', borderBottom: '1px solid var(--line)' }}>
         <div className="max-w-7xl mx-auto">
-          <div className="font-condensed text-sm font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--tour-yellow-dark)' }}>
-            Tour de France 2026
-          </div>
-          <h1 className="font-display text-5xl sm:text-7xl mb-4" style={{ color: 'var(--tour-text)' }}>Alle Etappes</h1>
-          <p className="text-base sm:text-lg max-w-xl" style={{ color: 'var(--tour-text-muted)' }}>
+          <div className="eyebrow mb-3">Tour de France 2026</div>
+          <h1 className="font-display text-5xl sm:text-7xl mb-4" style={{ color: 'var(--fg-0)' }}>
+            Alle Etappes
+          </h1>
+          <p className="text-base sm:text-lg max-w-xl" style={{ color: 'var(--fg-3)' }}>
             21 etappes door de mooiste bergen en steden van Europa — van Barcelona tot Parijs.
           </p>
 
           {/* Stats */}
-          <div className="flex flex-wrap gap-6 mt-8">
+          <div className="flex flex-wrap gap-8 mt-10">
             {[
               { value: allStages.length, label: 'Etappes', unit: '' },
-              { value: totalKm.toLocaleString('nl-NL'), label: 'Kilometer', unit: 'km' },
-              { value: totalElev.toLocaleString('nl-NL'), label: 'Hoogtemeters', unit: 'hm' },
+              { value: Math.round(totalKm).toLocaleString('nl-NL'), label: 'Kilometer', unit: 'km' },
+              { value: Math.round(totalElev).toLocaleString('nl-NL'), label: 'Hoogtemeters', unit: 'hm' },
               { value: completedCount, label: 'Gereden', unit: '' },
             ].map((stat) => (
               <div key={stat.label}>
-                <div className="font-display text-3xl" style={{ color: 'var(--tour-text)' }}>
-                  {stat.value}<span className="text-lg ml-1" style={{ color: 'var(--tour-text-muted)' }}>{stat.unit}</span>
+                <div className="font-display text-3xl sm:text-4xl leading-none" style={{ color: 'var(--accent)' }}>
+                  {stat.value}
+                  {stat.unit && <span className="text-lg ml-1" style={{ color: 'var(--fg-3)' }}>{stat.unit}</span>}
                 </div>
-                <div className="text-xs uppercase tracking-widest" style={{ color: 'var(--tour-text-muted)' }}>{stat.label}</div>
+                <div className="text-xs uppercase tracking-widest mt-1" style={{ color: 'var(--fg-3)' }}>{stat.label}</div>
               </div>
             ))}
           </div>
@@ -54,19 +61,17 @@ export default async function EtappesPage() {
       </section>
 
       {/* Legend */}
-      <section className="px-4 sm:px-6 lg:px-8 pb-6">
+      <section className="px-4 sm:px-6 lg:px-8 py-5" style={{ borderBottom: '1px solid var(--line)' }}>
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-wrap gap-3">
-            {[
-              { type: 'flat', color: '#00A651', label: 'Vlak' },
-              { type: 'hilly', color: '#FF8C00', label: 'Heuvelachtig' },
-              { type: 'mountain', color: '#E2001A', label: 'Berg' },
-              { type: 'time_trial', color: '#0055A4', label: 'Tijdrit' },
-              { type: 'team_time_trial', color: '#003d8f', label: 'Ploegentijdrit' },
-            ].map((t) => (
-              <div key={t.type} className="flex items-center gap-2 text-sm">
-                <div className="w-3 h-3 rounded-sm" style={{ background: t.color }} />
-                <span style={{ color: 'var(--tour-text-muted)' }}>{t.label}</span>
+            {typeFilters.map((t) => (
+              <div
+                key={t.key}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold"
+                style={{ background: 'var(--bg-2)', color: t.color, border: '1px solid var(--line)' }}
+              >
+                <div className="w-2 h-2 rounded-sm" style={{ background: t.color }} />
+                {t.label}
               </div>
             ))}
           </div>
@@ -74,12 +79,12 @@ export default async function EtappesPage() {
       </section>
 
       {/* Stages grid */}
-      <section className="px-4 sm:px-6 lg:px-8 pb-20">
+      <section className="px-4 sm:px-6 lg:px-8 py-10 pb-20">
         <div className="max-w-7xl mx-auto">
           {allStages.length === 0 ? (
-            <div className="text-center py-20" style={{ color: 'var(--tour-text-muted)' }}>
+            <div className="text-center py-20" style={{ color: 'var(--fg-3)' }}>
               <div className="text-5xl mb-4">🚴</div>
-              <p>Etappes worden binnenkort geladen...</p>
+              <p>Etappes worden binnenkort geladen…</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
