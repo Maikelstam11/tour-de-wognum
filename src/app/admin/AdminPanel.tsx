@@ -88,8 +88,11 @@ export default function AdminPanel({ participantCount, stages: initialStages, ri
 
   const checkAuth = async () => {
     const res = await fetch('/api/admin/check', { headers: { Authorization: `Bearer ${password}` } });
-    if (res.ok) { setAuthed(true); setAuthError(''); }
-    else setAuthError('Verkeerd wachtwoord');
+    if (res.ok) {
+      setAuthed(true);
+      setAuthError('');
+      sessionStorage.setItem('adminPwd', password);
+    } else setAuthError('Verkeerd wachtwoord');
   };
 
   const apiCall = async (url: string, body?: object): Promise<boolean> => {
@@ -235,6 +238,18 @@ export default function AdminPanel({ participantCount, stages: initialStages, ri
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Sidebar */}
           <div className="space-y-1">
+            <a
+              href="/admin/etappes"
+              className="w-full text-left px-4 py-3 rounded-xl text-sm font-condensed font-bold flex items-center justify-between mb-3"
+              style={{
+                background: 'var(--tour-yellow)',
+                color: '#000',
+                display: 'flex',
+              }}
+            >
+              <span>✏️ Etappes bewerken</span>
+              <span>→</span>
+            </a>
             {navItems.map(n => (
               <button
                 key={n.key}

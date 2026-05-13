@@ -26,6 +26,7 @@ export const stageTypeEnum = pgEnum('stage_type', [
   'mountain',
   'time_trial',
   'team_time_trial',
+  'rest_day',
 ]);
 
 export const stageStatusEnum = pgEnum('stage_status', [
@@ -79,6 +80,10 @@ export const stages = pgTable('stages', {
   isSprintStage: boolean('is_sprint_stage').notNull().default(false),
   isMountainStage: boolean('is_mountain_stage').notNull().default(false),
   status: stageStatusEnum('status').notNull().default('planned'),
+  expectedScenario: text('expected_scenario'),
+  profileImageUrl: text('profile_image_url'),
+  routeImageUrl: text('route_image_url'),
+  country: text('country').default('Frankrijk'),
 });
 
 // Participants

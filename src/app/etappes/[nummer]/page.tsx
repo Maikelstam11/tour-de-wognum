@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { db } from '@/db';
 import { stages, stageResults, riders, teams } from '@/db/schema';
 import { eq } from 'drizzle-orm';
@@ -47,10 +48,11 @@ const typeGradients: Record<string, string> = {
   mountain: 'linear-gradient(135deg, #fde8ea 0%, #fac8cc 100%)',
   time_trial: 'linear-gradient(135deg, #e6eef8 0%, #c8daf0 100%)',
   team_time_trial: 'linear-gradient(135deg, #e0ebf5 0%, #c0d5eb 100%)',
+  rest_day: 'linear-gradient(135deg, #f5f4f0 0%, #e8e6e0 100%)',
 };
 
 const typeIcons: Record<string, string> = {
-  flat: '🟢', hilly: '🟠', mountain: '🔴', time_trial: '🔵', team_time_trial: '🔷',
+  flat: '🟢', hilly: '🟠', mountain: '🔴', time_trial: '🔵', team_time_trial: '🔷', rest_day: '⚪',
 };
 
 export default async function EtappeDetailPage({ params }: Props) {
@@ -133,9 +135,10 @@ export default async function EtappeDetailPage({ params }: Props) {
               </div>
               <div className="space-y-4">
                 {[
+                  ...(stage.country ? [{ label: 'Land', value: stage.country }] : []),
                   { label: 'Afstand', value: `${stage.distanceKm} km` },
                   { label: 'Hoogtemeters', value: `${stage.elevationMeters.toLocaleString('nl-NL')} hm` },
-                  { label: 'Type', value: stageTypeLabel[stage.type] },
+                  { label: 'Type', value: stageTypeLabel[stage.type] ?? stage.type },
                   { label: 'Sprint-etappe', value: stage.isSprintStage ? '✓ Ja' : '✗ Nee' },
                   { label: 'Bergetappe', value: stage.isMountainStage ? '✓ Ja' : '✗ Nee' },
                 ].map((row) => (
@@ -146,18 +149,26 @@ export default async function EtappeDetailPage({ params }: Props) {
                 ))}
               </div>
 
-              <div className="mt-4 pt-4" style={{ borderTop: '1px solid var(--tour-border)' }}>
-                <div className="text-sm font-condensed font-bold mb-2" style={{ color: typeColor }}>
-                  Verwacht scenario
+              {(stage.expectedScenario || stage.isSprintStage || stage.isMountainStage || stage.type === 'time_trial' || stage.type === 'team_time_trial') && (
+                <div className="mt-4 pt-4" style={{ borderTop: '1px solid var(--tour-border)' }}>
+                  <div className="text-sm font-condensed font-bold mb-2" style={{ color: typeColor }}>
+                    Verwacht scenario
+                  </div>
+                  <p className="text-xs leading-relaxed" style={{ color: 'var(--tour-text-muted)' }}>
+                    {stage.expectedScenario
+                      ? stage.expectedScenario
+                      : stage.isSprintStage
+                        ? 'Een massasprint wordt verwacht. De sprinters zijn aan zet.'
+                        : stage.isMountainStage
+                          ? 'De klimmers bepalen de koers. Aanvallen verwacht op de slotklim.'
+                          : stage.type === 'time_trial'
+                            ? 'Elke seconde telt. De tijdrijders gaan voor de zege.'
+                            : stage.type === 'team_time_trial'
+                              ? 'Teams gaan als eenheid van start. Teamwork is cruciaal.'
+                              : null}
+                  </p>
                 </div>
-                <p className="text-xs leading-relaxed" style={{ color: 'var(--tour-text-muted)' }}>
-                  {stage.isSprintStage && 'Een massasprint wordt verwacht. De sprinters zijn aan zet.'}
-                  {stage.isMountainStage && !stage.isSprintStage && 'De klimmers bepalen de koers. Aanvallen verwacht op de slotklim.'}
-                  {stage.type === 'time_trial' && 'Elke seconde telt. De tijdrijders gaan voor de zege.'}
-                  {stage.type === 'team_time_trial' && 'Teams gaan als eenheid van start. Teamwork is cruciaal.'}
-                  {!stage.isSprintStage && !stage.isMountainStage && stage.type === 'hilly' && 'Punchers en vluchters maken kans. Onrustige koers verwacht.'}
-                </p>
-              </div>
+              )}
             </div>
           </div>
         </div>
@@ -167,6 +178,41 @@ export default async function EtappeDetailPage({ params }: Props) {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main content */}
           <div className="lg:col-span-2 space-y-8">
+            {/* Stage images */}
+            {(stage.profileImageUrl || stage.routeImageUrl) && (
+              <div className="space-y-4">
+                {stage.profileImageUrl && (
+                  <div>
+                    <div className="font-display text-2xl mb-3" style={{ color: 'var(--tour-text)' }}>Hoogteprofiel</div>
+                    <div className="card-dark overflow-hidden rounded-xl">
+                      <Image
+                        src={stage.profileImageUrl}
+                        alt={`Hoogteprofiel etappe ${stage.stageNumber}`}
+                        width={900}
+                        height={300}
+                        className="w-full h-auto object-cover"
+                        style={{ maxHeight: '220px', objectFit: 'cover' }}
+                      />
+                    </div>
+                  </div>
+                )}
+                {stage.routeImageUrl && (
+                  <div>
+                    <div className="font-display text-2xl mb-3" style={{ color: 'var(--tour-text)' }}>Routekaart</div>
+                    <div className="card-dark overflow-hidden rounded-xl">
+                      <Image
+                        src={stage.routeImageUrl}
+                        alt={`Routekaart etappe ${stage.stageNumber}`}
+                        width={900}
+                        height={500}
+                        className="w-full h-auto object-cover"
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
             {/* Climbs */}
             {climbs.length > 0 && (
               <div>

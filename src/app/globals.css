@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
 
 :root {
   --tour-yellow: #E8B800;
@@ -172,6 +171,17 @@ body {
 select.form-input option {
   background: white;
   color: var(--tour-text);
+}
+
+.form-label {
+  display: block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--tour-text-muted);
+  margin-bottom: 6px;
 }
 
 /* Confetti */
