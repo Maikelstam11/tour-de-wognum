@@ -148,7 +148,7 @@ export default async function EtappeDetailPage({ params }: Props) {
               <div className="space-y-4">
                 {[
                   ...(stage.country ? [{ label: 'Land', value: stage.country }] : []),
-                  { label: 'Afstand', value: `${stage.distanceKm} km` },
+                  { label: 'Afstand', value: `${Number(stage.distanceKm).toLocaleString('nl-NL', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} km` },
                   { label: 'Hoogtemeters', value: `${stage.elevationMeters.toLocaleString('nl-NL')} hm` },
                   { label: 'Type', value: stageTypeLabel[stage.type] ?? stage.type },
                   { label: 'Sprint-etappe', value: stage.isSprintStage ? '✓ Ja' : '✗ Nee' },

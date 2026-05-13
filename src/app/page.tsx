@@ -224,7 +224,7 @@ export default async function HomePage() {
                           {stage.startLocation} → {stage.finishLocation}
                         </div>
                         <div className="text-sm" style={{ color: 'var(--tour-text-muted)' }}>
-                          {formatShortDate(stage.date)} · {stage.distanceKm} km{stage.elevationMeters > 0 ? ` · ${stage.elevationMeters.toLocaleString('nl-NL')} hm` : ''}
+                          {formatShortDate(stage.date)} · {Number(stage.distanceKm).toLocaleString('nl-NL', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} km{stage.elevationMeters > 0 ? ` · ${stage.elevationMeters.toLocaleString('nl-NL')} hm` : ''}
                         </div>
                       </div>
                       <div className="text-xs font-condensed font-bold px-3 py-1 rounded flex-shrink-0" style={{ background: `${typeColor}20`, color: typeColor, border: `1px solid ${typeColor}30` }}>

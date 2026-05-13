@@ -3,6 +3,7 @@ import {
   uuid,
   text,
   integer,
+  real,
   boolean,
   timestamp,
   jsonb,
@@ -67,7 +68,7 @@ export const stages = pgTable('stages', {
   startLocation: text('start_location').notNull(),
   finishLocation: text('finish_location').notNull(),
   type: stageTypeEnum('type').notNull(),
-  distanceKm: integer('distance_km').notNull(),
+  distanceKm: real('distance_km').notNull(),
   elevationMeters: integer('elevation_meters').notNull().default(0),
   description: text('description'),
   climbs: jsonb('climbs').$type<Array<{

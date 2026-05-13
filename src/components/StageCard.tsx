@@ -63,7 +63,7 @@ export default function StageCard({ stage, compact = false, selected = false, on
             {stage.startLocation} → {stage.finishLocation}
           </div>
           <div className="text-xs" style={{ color: 'var(--tour-text-muted)' }}>
-            {formatShortDate(stage.date)} · {stage.distanceKm} km
+            {formatShortDate(stage.date)} · {Number(stage.distanceKm).toLocaleString('nl-NL', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} km
           </div>
         </div>
         <div className="text-xs font-condensed font-bold px-2 py-0.5 rounded flex-shrink-0" style={{ color: typeColor, background: `${typeColor}20` }}>
@@ -141,7 +141,7 @@ export default function StageCard({ stage, compact = false, selected = false, on
         {/* Stats */}
         <div className="flex gap-4 pt-3" style={{ borderTop: `1px solid ${typeColor}40` }}>
           <div>
-            <div className="font-display text-lg leading-none" style={{ color: 'var(--tour-text)' }}>{stage.distanceKm}</div>
+            <div className="font-display text-lg leading-none" style={{ color: 'var(--tour-text)' }}>{Number(stage.distanceKm).toLocaleString('nl-NL', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</div>
             <div className="text-xs" style={{ color: 'var(--tour-text-muted)' }}>km</div>
           </div>
           {stage.elevationMeters > 0 && (

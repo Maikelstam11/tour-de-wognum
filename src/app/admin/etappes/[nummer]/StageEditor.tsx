@@ -350,7 +350,7 @@ export default function StageEditor({ stage }: { stage: StageData }) {
                 </div>
                 <div>
                   <label className="form-label">Afstand (km)</label>
-                  <input className="form-input" type="number" value={distanceKm} onChange={e => setDistanceKm(e.target.value)} />
+                  <input className="form-input" type="number" step="0.1" min="0" value={distanceKm} onChange={e => setDistanceKm(e.target.value)} />
                 </div>
                 <div>
                   <label className="form-label">Hoogtemeters (hm)</label>

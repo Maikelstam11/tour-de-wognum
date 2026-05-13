@@ -74,7 +74,7 @@ export default async function AdminEtappesPage() {
                     <span>·</span>
                     <span>{stageTypeLabel[stage.type] ?? stage.type}</span>
                     <span>·</span>
-                    <span>{stage.distanceKm} km</span>
+                    <span>{Number(stage.distanceKm).toLocaleString('nl-NL', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} km</span>
                     {stage.elevationMeters > 0 && <><span>·</span><span>{stage.elevationMeters.toLocaleString('nl-NL')} hm</span></>}
                   </div>
                 </div>
