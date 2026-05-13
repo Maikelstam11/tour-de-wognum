@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import ReactMarkdown from 'react-markdown';
 import { db } from '@/db';
 import { stages, stageResults, riders, teams } from '@/db/schema';
 import { eq } from 'drizzle-orm';
@@ -122,9 +123,20 @@ export default async function EtappeDetailPage({ params }: Props) {
 
               {/* Description */}
               {stage.description && (
-                <p className="text-base leading-relaxed max-w-2xl" style={{ color: 'var(--tour-text-muted)' }}>
-                  {stage.description}
-                </p>
+                <div className="text-base leading-relaxed max-w-2xl prose-stage" style={{ color: 'var(--tour-text-muted)' }}>
+                  <ReactMarkdown
+                    components={{
+                      p: ({ children }) => <p className="mb-3 last:mb-0">{children}</p>,
+                      strong: ({ children }) => <strong style={{ color: 'var(--tour-text)', fontWeight: 700 }}>{children}</strong>,
+                      em: ({ children }) => <em style={{ fontStyle: 'italic' }}>{children}</em>,
+                      ul: ({ children }) => <ul className="list-disc pl-5 mb-3 space-y-1">{children}</ul>,
+                      ol: ({ children }) => <ol className="list-decimal pl-5 mb-3 space-y-1">{children}</ol>,
+                      li: ({ children }) => <li>{children}</li>,
+                    }}
+                  >
+                    {stage.description}
+                  </ReactMarkdown>
+                </div>
               )}
             </div>
 
@@ -154,19 +166,26 @@ export default async function EtappeDetailPage({ params }: Props) {
                   <div className="text-sm font-condensed font-bold mb-2" style={{ color: typeColor }}>
                     Verwacht scenario
                   </div>
-                  <p className="text-xs leading-relaxed" style={{ color: 'var(--tour-text-muted)' }}>
-                    {stage.expectedScenario
-                      ? stage.expectedScenario
-                      : stage.isSprintStage
-                        ? 'Een massasprint wordt verwacht. De sprinters zijn aan zet.'
-                        : stage.isMountainStage
-                          ? 'De klimmers bepalen de koers. Aanvallen verwacht op de slotklim.'
-                          : stage.type === 'time_trial'
-                            ? 'Elke seconde telt. De tijdrijders gaan voor de zege.'
-                            : stage.type === 'team_time_trial'
-                              ? 'Teams gaan als eenheid van start. Teamwork is cruciaal.'
-                              : null}
-                  </p>
+                  <div className="text-xs leading-relaxed" style={{ color: 'var(--tour-text-muted)' }}>
+                    <ReactMarkdown
+                      components={{
+                        p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
+                        strong: ({ children }) => <strong style={{ color: 'var(--tour-text)', fontWeight: 700 }}>{children}</strong>,
+                      }}
+                    >
+                      {stage.expectedScenario
+                        ? stage.expectedScenario
+                        : stage.isSprintStage
+                          ? 'Een massasprint wordt verwacht. De sprinters zijn aan zet.'
+                          : stage.isMountainStage
+                            ? 'De klimmers bepalen de koers. Aanvallen verwacht op de slotklim.'
+                            : stage.type === 'time_trial'
+                              ? 'Elke seconde telt. De tijdrijders gaan voor de zege.'
+                              : stage.type === 'team_time_trial'
+                                ? 'Teams gaan als eenheid van start. Teamwork is cruciaal.'
+                                : ''}
+                    </ReactMarkdown>
+                  </div>
                 </div>
               )}
             </div>

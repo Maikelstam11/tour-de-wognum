@@ -407,15 +407,45 @@ export default function StageEditor({ stage }: { stage: StageData }) {
               <label className="form-label">
                 Hoofdtekst (getoond op de etappepagina)
               </label>
+              <div className="flex flex-wrap gap-1 mb-2">
+                {[
+                  { label: 'B', title: 'Dikgedrukt', wrap: '**', display: 'font-bold' },
+                  { label: 'I', title: 'Cursief', wrap: '_', display: 'italic' },
+                ].map(btn => (
+                  <button
+                    key={btn.label}
+                    type="button"
+                    title={btn.title}
+                    onClick={() => {
+                      const el = document.getElementById('desc-textarea') as HTMLTextAreaElement;
+                      const start = el.selectionStart;
+                      const end = el.selectionEnd;
+                      const sel = description.slice(start, end) || btn.title;
+                      const newVal = description.slice(0, start) + btn.wrap + sel + btn.wrap + description.slice(end);
+                      setDescription(newVal);
+                      setTimeout(() => { el.focus(); el.setSelectionRange(start + btn.wrap.length, start + btn.wrap.length + sel.length); }, 0);
+                    }}
+                    className={`px-2 py-0.5 rounded text-xs border ${btn.display}`}
+                    style={{ background: 'var(--tour-bg-card2)', border: '1px solid var(--tour-border-strong)', color: 'var(--tour-text)', fontFamily: 'inherit' }}
+                  >
+                    {btn.label}
+                  </button>
+                ))}
+                <span className="text-xs px-2 py-0.5 rounded" style={{ background: 'var(--tour-bg-card2)', border: '1px solid var(--tour-border)', color: 'var(--tour-text-muted)', fontFamily: 'monospace' }}>
+                  lege regel = nieuwe alinea
+                </span>
+              </div>
               <textarea
+                id="desc-textarea"
                 className="form-input"
-                rows={6}
+                rows={8}
                 value={description}
                 onChange={e => setDescription(e.target.value)}
                 placeholder="Beschrijf de etappe: het parcours, de uitdagingen, de verwachte strijd..."
+                style={{ fontFamily: 'monospace', fontSize: '13px' }}
               />
               <div className="mt-1 text-xs" style={{ color: 'var(--tour-text-muted)' }}>
-                {description.length} tekens
+                {description.length} tekens · Markdown ondersteund: **dikgedrukt**, _cursief_, lege regel = alinea
               </div>
             </div>
 
